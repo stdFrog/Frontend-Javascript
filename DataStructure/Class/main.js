@@ -1,10 +1,10 @@
 /*
    // Keyword
 class Person{
-    constructor(Name, Age, Male){
+    constructor(Name, Age, Gender){
         this.Name = Name;
         this.Age = Age;
-        this.Male = Male;
+        this.Gender = Gender;
     }
 }
 
@@ -18,10 +18,10 @@ console.log(PersonTwo);
 /*
    // Instance Method
 class Person{
-    constructor(Name, Age, Male, Equity, Debt){
+    constructor(Name, Age, Gender, Equity, Debt){
         this.Name = Name;
         this.Age = Age;
-        this.Male = Male;
+        this.Gender = Gender;
         this.Equity = Equity;
         this.Debt = Debt;
     }
@@ -55,10 +55,10 @@ console.log(PersonTwo);
 class Person{
     static num = 10;
 
-    constructor(Name, Age, Male, Equity, Debt){
+    constructor(Name, Age, Gender, Equity, Debt){
         this.Name = Name;
         this.Age = Age;
-        this.Male = Male;
+        this.Gender = Gender;
         this.Equity = Equity;
         this.Debt = Debt;
     }
