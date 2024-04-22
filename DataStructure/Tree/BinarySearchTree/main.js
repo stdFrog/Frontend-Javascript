@@ -105,7 +105,7 @@ class BST{
                         }
                     }
                 }
-                return this;
+                return Removed;
             }
         }
     }
