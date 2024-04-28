@@ -32,21 +32,28 @@
     }
 
     function Hash(string){
-        let H = 5381;
-        let Ch;
+        let H = 0;
+        let i = 0;
 
-        while(Ch = string++){
-            H = ((H << 5) + H) + Ch;
+        while(i < string.length){
+            H = parseInt(string[i++].charCodeAt(0)) + (H << 6) + (H << 16) - H;
         }
 
         return H;
     }
 
-    ShowWindow();
-    ShowWindow(0xf437, Hash("SubClassing"));
-    ShowWindow(Hash("MainWindow"));
+    ShowWindow();                               ... 1
+    ShowWindow(0xf437, Hash("SubClassing"));    ... 2
+    ShowWindow(Hash("MainWindow"));             ... 3
 
 
+    위 코드에서 2번 호출문을 보자.
+    두 개의 인수를 전달했는데 실행해보면 별 다른 문제없이 제대로 된 값이 나온다.
+
+    함수의 원형을 보면 생략 기호(ellipsis)인 ...이 적혀 있는데 이 생략 기호 뒤에 식별자가 오며
+    이 식별자가 생략 기호 이후에 전달된 인수에 차례대로 접근하여 해당 위치의 값을 읽어온다.
+
+    활용 여지가 많으므로 반드시 알아두어야 할 구문중 하나이니 매일 조금씩이라도 연습해보는 것이 좋다.
 */
 
 function fn(x) { return (((x) > 0) ? parseInt(Math.log10(x) + 1) : 1); }
@@ -60,10 +67,11 @@ function ShowWindow(...Handle){
 }
 
 function Hash(string){
-    let H = 5381;
-    let i=0;
+    let H = 0;
+    let i = 0;
+
     while(i < string.length){
-        H = ((H << 5) + H) + string[i++];
+        H = parseInt(string[i++].charCodeAt(0)) + (H << 6) + (H << 16) - H;
     }
 
     return H;
@@ -73,3 +81,52 @@ ShowWindow();
 ShowWindow(0xf437, Hash("SubClassing"));
 ShowWindow(Hash("MainWindow"));
 
+function UserInit(Name, Age, ...Status){
+    this.Name = Name;
+    this.Age = Age;
+    this.Status = Status;
+}
+
+const User1 = new UserInit("Sic", 30, "HP: 10%", "MP: 1%", "STR = 10", "DEX = 4", "INT = 1", "LUK = 1");
+const User2 = new UserInit("Jun", 30, "HP: 80%", "MP: 90%");
+const User3 = new UserInit("Ho", 30, "HP: 60%", "MP: 100%");
+
+console.log(User1);
+console.log(User2);
+console.log(User3);
+
+let array1 = [1,2,3];
+let array2 = [4,5,6];
+array2.reverse().forEach((n) => {
+    array1.unshift(n);
+});
+
+console.log(array1);
+
+array1.shift();
+array1.shift();
+array1.shift();
+array2.reverse();
+
+let array3 = [...array2, ...array1];
+console.log(array3);
+
+/*
+    확실히 위와 같은 경우엔 함수보다도 전개 구문이 훨씬 편하다.
+*/
+
+let I = {name : "Sic"};
+let Info = {Age : 30};
+let fe = ["Javascript", "React"];
+let lang = ["Korean", "English"];
+
+I = Object.assign({}, I, Info, {skills : []});
+
+console.log(I);
+
+fe.forEach((item) =>{I.skills.push(item)});
+lang.forEach((item) =>{I.skills.push(item)});
+console.log(I);
+
+I.skill = [...fe, ...lang];
+console.log(I);
